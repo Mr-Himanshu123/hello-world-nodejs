@@ -13,5 +13,16 @@ jobs:
       - name: Checkout Source Code
         uses: actions/checkout@v2
 
-      # Add more steps here based on your requirements
+      - name: Install Node.js Dependencies
+        run: npm install
 
+      - name: Build Node.js Application
+        run: npm run build
+
+      - name: Deploy Application with Terraform
+        run: |
+          terraform init
+          terraform apply -auto-approve
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
